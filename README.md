@@ -1,0 +1,2 @@
+# Adaptive-Coded-Modulation-with-Probabilistic-Constellation-Shaping-for-Elastic-Optical-Network
+This project presents an Adaptive Coded Modulation (ACM) framework enhanced with  Probabilistic Constellation Shaping (PCS) for Elastic Optical Networks (EONs). The  system dynamically switches between three modulation formats — QPSK, 16-QAM, and  PCS-16QAM based on real-time Optical Signal-to-Noise Ratio (OSNR) measurements  over a 10–30 dB sweep.
