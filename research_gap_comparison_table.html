@@ -1,0 +1,167 @@
+
+<style>
+  .wrap { padding: 1rem 0; font-size: 13px; color: var(--color-text-primary); }
+  .section-label { font-size: 11px; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin: 1.5rem 0 0.5rem; }
+  table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  th { font-size: 11px; font-weight: 500; color: var(--color-text-secondary); text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--color-border-tertiary); background: var(--color-background-secondary); }
+  td { padding: 8px 10px; vertical-align: top; border-bottom: 0.5px solid var(--color-border-tertiary); font-size: 12px; line-height: 1.5; color: var(--color-text-primary); }
+  tr:last-child td { border-bottom: none; }
+  .col-paper { width: 18%; }
+  .col-focus { width: 17%; }
+  .col-gap { width: 30%; }
+  .col-contrib { width: 35%; }
+  .pill { display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 7px; border-radius: 10px; margin-top: 3px; }
+  .pill-red { background: #FCEBEB; color: #A32D2D; }
+  .pill-green { background: #EAF3DE; color: #3B6D11; }
+  .pill-amber { background: #FAEEDA; color: #854F0B; }
+  .highlight-row td { background: #EAF3DE; }
+  .highlight-row td:first-child { border-left: 3px solid #639922; }
+  .star { color: #639922; font-weight: 500; font-size: 12px; }
+</style>
+<div class="wrap">
+  <div class="section-label">Research gap analysis — recent papers vs. your project</div>
+  <table>
+    <thead>
+      <tr>
+        <th class="col-paper">Paper (Year)</th>
+        <th class="col-focus">Focus area</th>
+        <th class="col-gap">Research gap / limitation</th>
+        <th class="col-contrib">How your project addresses it</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Elzanaty et al.</strong><br><span style="color:var(--color-text-secondary)">2020 — Base paper</span></td>
+        <td>ACM + PCS for FSO / IM-DD channels</td>
+        <td>
+          <span class="pill pill-red">Gap</span><br>
+          Uses unipolar PAM only — no coherent QAM; no multi-objective scoring; no hysteresis switching; no spectral efficiency or power co-optimisation. Fixed shaping parameter with no switching logic.
+        </td>
+        <td>
+          <span class="pill pill-green">Addressed</span><br>
+          Extends to coherent 16-QAM with MB-PCS. Adds three-mode ACM switching (QPSK / 16-QAM / PCS-16QAM). Introduces composite score jointly optimising BER (w1=0.5), SE (w2=0.3), power (w3=0.2) with ±2 dB hysteresis dead-band.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Cho &amp; Winzer</strong><br><span style="color:var(--color-text-secondary)">2019/cited 2020+</span></td>
+        <td>PCS theory &amp; rate adaptability for optical fiber</td>
+        <td>
+          <span class="pill pill-red">Gap</span><br>
+          Reviews PCS in isolation — no adaptive switching between formats, no BER/power multi-objective framework, no hysteresis control, no EON context.
+        </td>
+        <td>
+          <span class="pill pill-green">Addressed</span><br>
+          Applies PCS as a third ACM mode within a live EON OSNR feedback loop. Hysteresis prevents format oscillation. Shaping gain (+1.20 dB) is verified within the composite scoring system.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Oliveira et al.</strong><br><span style="color:var(--color-text-secondary)">2021</span></td>
+        <td>PCS for amplifier-less coherent links</td>
+        <td>
+          <span class="pill pill-red">Gap</span><br>
+          Fixed single modulation format with PCS — no format switching, no BER/SE/power joint objective, no hysteresis, no EON architecture.
+        </td>
+        <td>
+          <span class="pill pill-green">Addressed</span><br>
+          Multi-format switching with PCS-16QAM as a selectable mode. Power reduction (1.3 W vs 1.5 W, −13%) is one of three co-optimised objectives, not a standalone goal.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Reihani et al.</strong><br><span style="color:var(--color-text-secondary)">2022</span></td>
+        <td>ANN-based adaptive modulation in EON</td>
+        <td>
+          <span class="pill pill-red">Gap</span><br>
+          Optimises spectral efficiency only using ML — no PCS, no power objective, no BER compliance guarantee, no hysteresis, no closed-form analytical model.
+        </td>
+        <td>
+          <span class="pill pill-green">Addressed</span><br>
+          Deterministic closed-form ACM with PCS — no ML training overhead. BER compliance (10⁻⁶) is the highest-priority objective (w1=0.5). Full 10–30 dB OSNR BER compliance is verified analytically.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Klinkowski &amp; Jaworski</strong><br><span style="color:var(--color-text-secondary)">2022</span></td>
+        <td>OSNR-aware lightpath planning in MCF-EON</td>
+        <td>
+          <span class="pill pill-red">Gap</span><br>
+          Static lightpath planning — no real-time adaptive modulation switching, no PCS, no multi-objective scoring, no hysteresis.
+        </td>
+        <td>
+          <span class="pill pill-green">Addressed</span><br>
+          Real-time OSNR feedback drives dynamic format switching. ±2 dB dead-band stabilises the finite-state machine. PCS adds a third adaptive degree of freedom beyond QPSK/16-QAM.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Karandin et al.</strong><br><span style="color:var(--color-text-secondary)">2023</span></td>
+        <td>Probabilistic ML-based QoT &amp; margin reduction in EON</td>
+        <td>
+          <span class="pill pill-red">Gap</span><br>
+          Focuses only on margin management via ML — no PCS, no energy efficiency objective, no hysteresis, no composite multi-objective score.
+        </td>
+        <td>
+          <span class="pill pill-green">Addressed</span><br>
+          Uses a deterministic 2 dB uncertainty buffer (∆m) instead of ML-trained margins, combined with PCS shaping gain (+1.20 dB) to achieve BER-compliant, power-efficient operation without training data.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Liu et al. (FBD-PCS)</strong><br><span style="color:var(--color-text-secondary)">2023</span></td>
+        <td>Feedback-driven adaptive PCS for fiber-THz systems</td>
+        <td>
+          <span class="pill pill-red">Gap</span><br>
+          Adaptive shaping parameter selection per channel — but single modulation format, no QPSK/16-QAM mode switching, no spectral efficiency or power co-objective, no EON targeting.
+        </td>
+        <td>
+          <span class="pill pill-green">Addressed</span><br>
+          Fixed λ=0.35 at the entropy-gain knee balances SE and BER without per-symbol feedback complexity. Three-mode format switching achieves 86% SE gain over QPSK at full BER compliance.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Cheng et al.</strong><br><span style="color:var(--color-text-secondary)">2024</span></td>
+        <td>ML-based RMSA with modulation-adaptive routing in EON</td>
+        <td>
+          <span class="pill pill-red">Gap</span><br>
+          Network-level routing and spectrum allocation — no PCS, no power objective, no hysteresis, no closed-form BER model, no per-link real-time format switching.
+        </td>
+        <td>
+          <span class="pill pill-green">Addressed</span><br>
+          Per-link real-time ACM with PCS-16QAM. Closed-form BER expressions (no ML inference delay). Hysteresis prevents switching oscillation at the link level, complementing network-layer RMSA solutions.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Liu et al. (4D PCS)</strong><br><span style="color:var(--color-text-secondary)">2023</span></td>
+        <td>PCS over multi-dimensional constellations for long-haul</td>
+        <td>
+          <span class="pill pill-red">Gap</span><br>
+          Fixed 4D modulation with PCS — no adaptive switching, no power/SE co-objective, no hysteresis, high implementation complexity not suitable for real-time EON transponders.
+        </td>
+        <td>
+          <span class="pill pill-green">Addressed</span><br>
+          Uses 2D PAM-4-based PCS-16QAM (lower complexity) with a practical normalised composite score for real-time mode selection — directly implementable in standard coherent transponders.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Liang &amp; Kahn</strong><br><span style="color:var(--color-text-secondary)">2025</span></td>
+        <td>Optimal vs MB shaping distributions for optical channels</td>
+        <td>
+          <span class="pill pill-red">Gap</span><br>
+          Theoretical distribution analysis only — no ACM framework, no switching algorithm, no BER/SE/power joint optimisation, no EON simulation.
+        </td>
+        <td>
+          <span class="pill pill-green">Addressed</span><br>
+          Validates MB distribution (λ=0.35) as the operating point at the entropy-gain knee in a full MATLAB simulation, confirming +1.20 dB shaping gain within a practical ACM system over 21-point OSNR sweep.
+        </td>
+      </tr>
+      <tr class="highlight-row">
+        <td><strong class="star">★ Your Project</strong><br><span style="color:#3B6D11">ACM + PCS for EON (2024)</span></td>
+        <td>Three-mode ACM with MB-PCS, multi-objective score, hysteresis switching</td>
+        <td>
+          <span class="pill pill-green">Gap filled</span><br>
+          No prior work combines: (1) PCS as a third ACM mode, (2) normalised BER+SE+power composite score, and (3) hysteresis-stabilised switching — all in a unified EON framework.
+        </td>
+        <td>
+          <span class="pill pill-green">Novel contributions</span><br>
+          +1.20 dB shaping gain · 86% SE over QPSK · 13% power saving vs 16-QAM · 7% energy efficiency gain · Full 10⁻⁶ BER compliance 10–30 dB · Only 2 switching events (hysteresis stable)
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

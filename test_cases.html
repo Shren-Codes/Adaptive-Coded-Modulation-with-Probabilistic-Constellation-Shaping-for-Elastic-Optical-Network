@@ -1,0 +1,49 @@
+
+<style>
+.tc-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; padding: 1rem 0; }
+.tc-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 14px 16px; }
+.tc-num { font-size: 11px; font-weight: 500; color: var(--color-text-secondary); margin-bottom: 4px; }
+.tc-title { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
+.tc-range { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 10px; margin-bottom: 8px; }
+.tc-desc { font-size: 12px; color: var(--color-text-secondary); line-height: 1.55; }
+.tc-expect { font-size: 11px; color: var(--color-text-primary); margin-top: 8px; padding-top: 8px; border-top: 0.5px solid var(--color-border-tertiary); }
+.tag-low { background: #FCEBEB; color: #A32D2D; }
+.tag-mid { background: #FAEEDA; color: #854F0B; }
+.tag-high { background: #EAF3DE; color: #3B6D11; }
+.tag-full { background: #E6F1FB; color: #185FA5; }
+</style>
+<div class="tc-grid">
+
+<div class="tc-card">
+  <div class="tc-num">Test case 1</div>
+  <div class="tc-title">Low OSNR zone</div>
+  <span class="tc-range tag-low">OSNR 10–18 dB</span>
+  <div class="tc-desc">System operates exclusively in QPSK mode. 16-QAM and PCS-16QAM both fail BER threshold at these SNR levels. Tests whether the system correctly stays locked in QPSK and never attempts an upward switch.</div>
+  <div class="tc-expect">Expected: QPSK active, BER ~10⁻³ to 10⁻⁸, zero switching events, SE = 2.0 b/sym</div>
+</div>
+
+<div class="tc-card">
+  <div class="tc-num">Test case 2</div>
+  <div class="tc-title">Hysteresis dead-band</div>
+  <span class="tc-range tag-mid">OSNR 18–22 dB</span>
+  <div class="tc-desc">OSNR sits inside the ±2 dB dead-band around the 20 dB threshold. The system should hold its current format and NOT switch, even though OSNR has crossed the nominal boundary. This is the primary stability test.</div>
+  <div class="tc-expect">Expected: Format locked (no ping-pong), 0 switching events in this zone, current state held</div>
+</div>
+
+<div class="tc-card">
+  <div class="tc-num">Test case 3</div>
+  <div class="tc-title">PCS activation zone</div>
+  <span class="tc-range tag-high">OSNR 22–30 dB</span>
+  <div class="tc-desc">OSNR exceeds τ + δH = 22 dB, triggering upgrade evaluation. Composite score comparison determines whether PCS-16QAM or uniform 16-QAM is selected. PCS should win due to superior BER weight (w1=0.5) and lower power.</div>
+  <div class="tc-expect">Expected: PCS-16QAM selected, SE = 2.633 b/sym, EE ≈ 2.86 b/sym/W, BER &lt; 10⁻⁶</div>
+</div>
+
+<div class="tc-card">
+  <div class="tc-num">Test case 4</div>
+  <div class="tc-title">Full sweep comparison</div>
+  <span class="tc-range tag-full">OSNR 10–30 dB (all 21 points)</span>
+  <div class="tc-desc">End-to-end run comparing ACM+PCS adaptive system against fixed QPSK and fixed 16-QAM baselines. Validates all metrics simultaneously: BER compliance, SE improvement, energy efficiency, switching event count.</div>
+  <div class="tc-expect">Expected: 86% SE gain over QPSK, 7% EE gain over 16-QAM, BER ≤ 10⁻⁶ all 21 points, ≤ 5 switches</div>
+</div>
+
+</div>

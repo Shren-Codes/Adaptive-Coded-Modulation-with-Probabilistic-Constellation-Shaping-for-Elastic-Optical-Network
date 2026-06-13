@@ -1,0 +1,108 @@
+
+<style>
+.scene { padding: 1rem 0; }
+.timeline { position: relative; padding-left: 28px; }
+.timeline::before { content:''; position:absolute; left:8px; top:0; bottom:0; width:1.5px; background:var(--color-border-tertiary); }
+.tl-item { position:relative; margin-bottom:20px; }
+.tl-dot { position:absolute; left:-24px; top:4px; width:10px; height:10px; border-radius:50%; border:1.5px solid; }
+.dot-low { background:#FCEBEB; border-color:#E24B4A; }
+.dot-ok  { background:#FAEEDA; border-color:#BA7517; }
+.dot-high{ background:#EAF3DE; border-color:#3B6D11; }
+.tl-time { font-size:11px; font-weight:500; color:var(--color-text-secondary); margin-bottom:3px; }
+.tl-head { font-size:13px; font-weight:500; color:var(--color-text-primary); margin-bottom:4px; }
+.tl-body { font-size:12px; color:var(--color-text-secondary); line-height:1.55; }
+.compare-grid { display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:12px; margin-top:1.5rem; }
+.ccard { border:0.5px solid var(--color-border-tertiary); border-radius:var(--border-radius-lg); padding:14px; background:var(--color-background-primary); }
+.ccard-label { font-size:11px; font-weight:500; color:var(--color-text-secondary); margin-bottom:8px; text-transform:uppercase; letter-spacing:0.04em; }
+.ccard.bad { border-left: 3px solid #E24B4A; border-radius:0 var(--border-radius-lg) var(--border-radius-lg) 0; }
+.ccard.good { border-left: 3px solid #639922; border-radius:0 var(--border-radius-lg) var(--border-radius-lg) 0; }
+.row-item { font-size:12px; color:var(--color-text-primary); padding:5px 0; border-bottom:0.5px solid var(--color-border-tertiary); display:flex; justify-content:space-between; gap:8px; }
+.row-item:last-child { border-bottom:none; }
+.val-bad  { color:#A32D2D; font-weight:500; }
+.val-good { color:#3B6D11; font-weight:500; }
+.val-ok   { color:#854F0B; font-weight:500; }
+.osnr-bar { height: 6px; border-radius:3px; margin:2px 0 4px; }
+</style>
+<div class="scene">
+
+<div style="font-size:13px; font-weight:500; color:var(--color-text-primary); margin-bottom:4px;">Your day — Chennai, 8 PM, IPL match night on JioFiber</div>
+<div style="font-size:11px; color:var(--color-text-secondary); margin-bottom:1.5rem;">
+  Network congestion during peak hours (7 PM to 11 PM) reduces speeds by 20–30% on Indian ISP fiber links.
+   India ranked 87th out of 181 countries in median fixed broadband speed (58.62 Mbps download) as of late 2023.
+</div>
+
+<div class="timeline">
+
+  <div class="tl-item">
+    <div class="tl-dot dot-high"></div>
+    <div class="tl-time">2:00 AM — Off-peak</div>
+    <div class="tl-head">Jio backbone: near-empty, high OSNR (~26 dB)</div>
+    <div class="osnr-bar" style="background:linear-gradient(90deg,#C0DD97 0%,#639922 100%);width:85%"></div>
+    <div class="tl-body">
+      Jio's optical backbone between Chennai and Mumbai data centre is carrying almost no traffic.
+      Amplifiers are cool, fiber is clean. OSNR is high. Your Netflix downloads at 150 Mbps, no issues.
+      <br><strong>Current fixed system:</strong> locked to 16-QAM. Works fine but wastes 13% extra power all night long.
+      <br><strong>Your ACM+PCS:</strong> automatically selects PCS-16QAM — same throughput, 1.3 W instead of 1.5 W, +1.20 dB shaping gain.
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot dot-ok"></div>
+    <div class="tl-time">8:00 AM — Morning ramp-up</div>
+    <div class="tl-head">Offices open, OSNR starts dropping (~21 dB)</div>
+    <div class="osnr-bar" style="background:linear-gradient(90deg,#FAC775 0%,#BA7517 100%);width:60%"></div>
+    <div class="tl-body">
+      Millions of employees log into Microsoft Teams, upload to Google Drive, push code to GitHub.
+      OSNR dips to ~21 dB — right inside the ±2 dB hysteresis dead-band (18–22 dB).
+      <br><strong>Current fixed system:</strong> still using 16-QAM, BER starts rising quietly — most users won't notice yet.
+      <br><strong>Your ACM+PCS:</strong> hysteresis holds PCS-16QAM. No unnecessary switching. System stays stable.
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot dot-low"></div>
+    <div class="tl-time">8:00 PM — IPL match + peak hours</div>
+    <div class="tl-head">300 million Indians streaming simultaneously, OSNR crashes (~14 dB)</div>
+    <div class="osnr-bar" style="background:linear-gradient(90deg,#F7C1C1 0%,#E24B4A 100%);width:28%"></div>
+    <div class="tl-body">
+      Peak hours occur between 7 PM and 11 PM — streaming, gaming, and video calls cause network congestion, leading to buffering and slowdowns.
+      Jio's backbone OSNR on the Chennai–Mumbai route drops hard.
+      <br><strong>Current fixed system:</strong> still locked to 16-QAM. BER explodes above 10⁻³. Jio's SDN controller panics, drops your connection to 480p. You see the dreaded buffer wheel mid-over.
+      <br><strong>Your ACM+PCS:</strong> detects OSNR &lt; 18 dB. Hysteresis crossed. Automatically switches to QPSK in under 1 ms. BER drops back to 10⁻⁸. You keep watching at HD — zero buffering.
+    </div>
+  </div>
+
+  <div class="tl-item">
+    <div class="tl-dot dot-ok"></div>
+    <div class="tl-time">10:30 PM — Match ends, crowd leaves</div>
+    <div class="tl-head">Traffic drains, OSNR recovers (~23 dB)</div>
+    <div class="osnr-bar" style="background:linear-gradient(90deg,#C0DD97 0%,#639922 100%);width:72%"></div>
+    <div class="tl-body">
+      Millions of users go to sleep. OSNR climbs back above 22 dB — past the upper hysteresis boundary.
+      <br><strong>Current fixed system:</strong> operator manually reviews, may or may not upgrade format until the next maintenance window.
+      <br><strong>Your ACM+PCS:</strong> composite score re-evaluates. PCS-16QAM wins. System auto-upgrades. Your late-night YouTube at 4K just works.
+    </div>
+  </div>
+
+</div>
+
+<div class="compare-grid">
+  <div class="ccard bad">
+    <div class="ccard-label">Today — fixed 16-QAM (no ACM)</div>
+    <div class="row-item"><span>IPL night quality</span><span class="val-bad">480p buffering</span></div>
+    <div class="row-item"><span>BER at 14 dB OSNR</span><span class="val-bad">&gt; 10⁻³</span></div>
+    <div class="row-item"><span>Night power usage</span><span class="val-bad">1.5 W (always)</span></div>
+    <div class="row-item"><span>Operator action needed?</span><span class="val-bad">Yes — manual</span></div>
+    <div class="row-item"><span>Format switches</span><span class="val-bad">0 (stuck)</span></div>
+  </div>
+  <div class="ccard good">
+    <div class="ccard-label">With your ACM+PCS system</div>
+    <div class="row-item"><span>IPL night quality</span><span class="val-good">HD, no buffer</span></div>
+    <div class="row-item"><span>BER at 14 dB OSNR</span><span class="val-good">10⁻⁸ (QPSK)</span></div>
+    <div class="row-item"><span>Night power usage</span><span class="val-good">1.3 W (−13%)</span></div>
+    <div class="row-item"><span>Operator action needed?</span><span class="val-good">None — auto</span></div>
+    <div class="row-item"><span>Format switches</span><span class="val-ok">2 (hysteresis stable)</span></div>
+  </div>
+</div>
+
+</div>
